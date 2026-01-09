@@ -1,0 +1,49 @@
+name: Lab 2 - Automated Training and Evaluation
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run training script
+        run: |
+          python train.py
+
+      - name: Write metrics to Job Summary
+        run: |
+          echo "## Lab 2 – Model Evaluation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "**Name:** Parthiv Reddy" >> $GITHUB_STEP_SUMMARY
+          echo "**Roll Number:** 2022BCS0073" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Evaluation Metrics" >> $GITHUB_STEP_SUMMARY
+          cat output/evaluation/results.json >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload trained model
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-model
+          path: output/model/
+
+      - name: Upload evaluation results
+        uses: actions/upload-artifact@v4
+        with:
+          name: evaluation-results
+          path: output/evaluation/
