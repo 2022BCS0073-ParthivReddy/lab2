@@ -29,9 +29,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # Model (start with Linear Regression)
-model = LinearRegression()
-model.fit(X_train, y_train)
-
 model = RandomForestRegressor(
     n_estimators=50,
     max_depth=10,
