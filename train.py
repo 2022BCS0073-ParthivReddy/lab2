@@ -17,6 +17,10 @@ df = pd.read_csv("dataset/winequality-white.csv", sep=";")
 X = df.drop("quality", axis=1)
 y = df["quality"]
 
+selected_features = df.corr()["quality"].abs().sort_values(ascending=False)[1:8].index
+X = df[selected_features]
+y = df["quality"]
+
 
 # Train-test split (80/20 as baseline)
 X_train, X_test, y_train, y_test = train_test_split(
