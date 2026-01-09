@@ -3,7 +3,6 @@ import json
 import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
 
@@ -18,9 +17,6 @@ df = pd.read_csv("dataset/winequality-white.csv", sep=";")
 X = df.drop("quality", axis=1)
 y = df["quality"]
 
-# Preprocessing (same as your EXP-LR-02)
-scaler = StandardScaler()
-X = scaler.fit_transform(X)
 
 # Train-test split (80/20 as baseline)
 X_train, X_test, y_train, y_test = train_test_split(
